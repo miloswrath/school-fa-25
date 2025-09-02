@@ -1,161 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Page Title</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scame=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+  <title>Page Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-/* Style the body */
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0
-}
+  <style>
+    * { box-sizing: border-box; }
 
-/* Header/logo Title */
-.header {
-  padding: 80px;
-  text-align: center;
-  background: #1abc9c;
-  color: white;
-}
+    body { font-family: Arial, Helvetica, sans-serif; margin: 0; }
 
-/* Increase the font size of the heading */
-.header h1 {
-  font-size: 40px;
-}
+    .header {
+      padding: 80px;
+      text-align: center;
+      background: linear-gradient(135deg, purple, blue);
+      color: white;
+    }
 
-/* Style the top navigation bar */
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
+    .header h1 { font-size: 40px; }
 
-/* Style the navigation bar links */
-.navbar a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  text-decoration: none;
-}
+    .navbar { overflow: hidden; background-color: #333; }
+    .navbar a {
+      float: left; display: block; color: white; text-align: center;
+      padding: 14px 20px; text-decoration: none;
+    }
+    .navbar a.right { float: right; }
+    .navbar a:hover { background-color: #ddd; color: black; }
 
-/* Right-aligned link */
-.navbar a.right {
-  float: right;
-}
+    .row { display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; }
+    .side { -ms-flex: 30%; flex: 30%; background-color: #f1f1f1; padding: 20px; }
+    .main { -ms-flex: 70%; flex: 70%; background-color: white; padding: 20px; }
 
-/* Change color on hover */
-.navbar a:hover {
-  background-color: #ddd;
-  color: black;
-}
+    /* Fake image, adjusted to use linear gradient with slight angle */
+    .fakeimg {
+      background: linear-gradient(135deg, purple, blue);
+      width: 100%;
+      padding: 20px;
+      border-radius: 8px;
+    }
 
-/* Column container */
-.row {  
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-}
+    .rainbow-link {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+    .rainbow-link:hover {
+      background-image: linear-gradient(
+        90deg,
+        red, orange, yellow, green, blue, indigo, violet, blue, green, yellow, orange, red
+      );
+      background-size: 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow-shift 3s linear infinite;
+    }
+    @keyframes rainbow-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-/* Create two unequal columns that sits next to each other */
-/* Sidebar/left column */
-.side {
-  -ms-flex: 30%; /* IE10 */
-  flex: 30%;
-  background-color: #f1f1f1;
-  padding: 20px;
-}
+    .footer { padding: 20px; text-align: center; background: #ddd; }
 
-/* Main column */
-.main {   
-  -ms-flex: 70%; /* IE10 */
-  flex: 70%;
-  background-color: white;
-  padding: 20px;
-}
-
-/* Fake image, adjusted to use linear gradient with slight angle */
-.fakeimg {
-  background: linear-gradient(135deg, purple, blue);
-  width: 100%;
-  padding: 20px;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-}
-
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
-  .row {   
-    flex-direction: column;
-  }
-}
-
-/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
-  .navbar a {
-    float: none;
-    width: 100%;
-  }
-}
-</style>
+    @media screen and (max-width: 700px) { .row { flex-direction: column; } }
+    @media screen and (max-width: 400px) { .navbar a { float: none; width: 100%; } }
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>Zak's New Website</h1>
-  <p>Today is <time id="today"></time>.</p>
-  <script>document.getElementById('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});</script>
-</div>
-
-<div class="navbar">
-  <a href="https://github.com/miloswrath">My Github Profile</a>
-  <a href="https://www.counter-strike.net/cs2">My Favorite Video Game</a>
-  <a href="https://www.doordash.com/">In case you're hungry...</a>
-  <a href="#" class="right">Link</a>
-</div>
-
-<div class="row">
-  <div class="side">
-    <h2>About Me</h2>
-    <h5>Photo of me:</h5>
-    <img src="cat.jpg" class="fakeimg" style="width:200px;height:200px;"></img>
-    <p>I'm a baller cat</p>
-    <h3>Message from me</h3>
-    <p>Hey everyone! Check out my awesome spiky hairdo—I look super cool with those wild, punk-style spikes!.</p>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div>
+  <div class="header">
+    <h1>Zak's New Website</h1>
+    <p>Today is <time class="js-today"></time>.</p>
   </div>
-  <div class="main">
-    <h2>My Newest Minecraft Build</h2>
-    <h5>Some awesome waffles 2025-08-28</h5>
-    <img src="waffle_house.jpg" class="fakeimg" style="height:400px;width:500px;"></img>
-    <p>More about it</p>
-    <p>That’s my latest Minecraft build—a Waffle House surrounded by lava, proving I’m the coolest builder around! 😸👍</p>
-    <br>
-    <h2>My NixOS Configuration</h2>
-    <h5>Classic - overplayed, even. 2025-08-28</h5>
-    <img src="nix.png" class="fakeimg" style="height:540px;width:960px;"></img>
-    <p>More about it</p>
-    <p>This is my slick NixOS configuration desktop, showing off my tech skills with a sleek, customized setup</p>
+
+  <div class="navbar">
+    <a class="rainbow-link" href="https://github.com/miloswrath">My Github Profile</a>
+    <a class="rainbow-link" href="https://www.counter-strike.net/cs2">My Favorite Video Game</a>
+    <a class="rainbow-link" href="https://www.doordash.com/">In case you're hungry...</a>
+    <a href="#" class="right">Link</a>
   </div>
-</div>
 
-<div class="footer">
-  <h2>Footer</h2>
-</div>
+  <div class="row">
+    <div class="side">
+      <h2>About Me</h2>
+      <h5>Photo of me:</h5>
+      <img src="cat.jpg" alt="A cool cat" class="fakeimg" style="width:100%;height:20%;border-radius:8px">
+      <p>I'm a baller cat</p>
+      <h3>Message from me</h3>
+      <p>Hey everyone! Check out my awesome spiky hairdo—I look super cool</p>
+      <div class="fakeimg" style="height:60px;">Image</div><br>
+      <div class="fakeimg" style="height:60px;">Image</div><br>
+      <div class="fakeimg" style="height:60px;">Image</div>
+    </div>
 
+    <div class="main">
+      <h2>My Newest Minecraft Build</h2>
+      <div>
+        <h5>Some awesome waffles <time class="js-today"></time></h5>
+      </div>
+      <img src="waffle_house.jpg" alt="Minecraft Waffle House build" class="fakeimg" style="height:30%;width:100%;">
+      <p>More about it</p>
+      <p>That’s my latest Minecraft build—a Waffle House from hell. 😸👍</p>
+      <br>
+      <h2>My NixOS Configuration</h2>
+      <h5>Classic - overplayed, even. <time class="js-today"></time></h5>
+      <img src="nix.png" alt="NixOS configuration desktop" class="fakeimg" style="height:30%;width:100%;">
+      <p>More about it</p>
+      <p>This is my slick NixOS configuration desktop, classic incel stuff</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <h2>Footer 🦶</h2>
+  </div>
+
+  <!-- One script at the end populates every .js-today -->
+  <script>
+    (function () {
+      const now = new Date();
+      const human = now.toLocaleDateString(undefined, {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+      const machine = now.toISOString().split('T')[0]; // YYYY-MM-DD
+
+      document.querySelectorAll('time.js-today').forEach(el => {
+        el.textContent = human;
+        el.setAttribute('datetime', machine);
+      });
+    })();
+  </script>
 </body>
 </html>
 
