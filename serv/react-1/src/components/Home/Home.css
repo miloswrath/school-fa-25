@@ -1,0 +1,22 @@
+/* Home.css */
+* { box-sizing: border-box; }
+
+.pageRoot,
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media screen and (max-width: 700px) {
+  .row {
+    flex-direction: column;
+  }
+}
