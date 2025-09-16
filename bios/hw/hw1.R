@@ -148,3 +148,42 @@ cat("Mexico shows a younger population structure with higher shares under 25,",
     "while the U.S. has relatively more people in older age groups (55+)."
 )
 
+olc = read.csv("/home/zak/school/fa25/school-fa-25/bios/lab/OCHL4120.csv")
+# (a) Sex – Bar Chart
+ggplot(olc, aes(x = sex)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Distribution of Sex",
+       x = "Sex",
+       y = "Count") +
+  theme_minimal()
+
+# (b) AgeAidFitted – Histogram
+ggplot(olc, aes(x = age_aid_fitted)) +
+  geom_histogram(binwidth = 5, fill = "darkgreen", color = "white") +
+  labs(title = "Distribution of Age at Hearing Aid Fitting",
+       x = "Age at Hearing Aid Fitting (years)",
+       y = "Frequency") +
+  theme_minimal()
+
+# (c) IncomeRange – Bar Chart
+ggplot(olc, aes(x = income_range)) +
+  geom_bar(fill = "orange") +
+  labs(title = "Distribution of Income Range",
+       x = "Income Range",
+       y = "Count") +
+  theme_minimal()
+
+# (d) BetterEarPTA – Boxplot
+ggplot(olc, aes(y = better_ear_PTA)) +
+  geom_boxplot(fill = "purple", alpha = 0.6) +
+  labs(title = "Distribution of Better Ear PTA",
+       y = "Better Ear PTA (dB HL)") +
+  theme_minimal()
+
+# (e) MothersEducation – Bar Chart
+ggplot(olc, aes(x = mom_edu)) +
+  geom_bar(fill = "darkred") +
+  labs(title = "Distribution of Mother’s Education",
+       x = "Mother’s Education Level",
+       y = "Count") +
+  theme_minimal()
