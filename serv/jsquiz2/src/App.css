@@ -1,0 +1,30 @@
+  * {
+    box-sizing: border-box;
+  }
+  
+  .status {
+	margin-bottom: 10px;
+  }
+   
+  .square {
+    background: #e1edcc;
+    border: 2px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 10vw;
+  }
+  
+  .board-row:after {
+  display: table;
+	clear:both;
+	content:'';
+  }
+  
+  

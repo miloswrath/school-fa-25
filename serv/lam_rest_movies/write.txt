@@ -1,0 +1,35 @@
+import { DynamoDBClient, ExecuteStatementCommand } from "@aws-sdk/client-dynamodb";
+
+const ddb = new DynamoDBClient({});
+
+export const handler = async (event, context) => {
+  const qs = event.queryStringParameters || {};
+  const user = qs.user;
+  const text = qs.text;
+  if (!user || !text) {
+    return {
+      statusCode: 400,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ message: "Provide ?user=...&text=..." })
+    };
+  }
+
+  const Statement = `INSERT INTO "${process.env.TABLE_NAME}"
+                     VALUE {'user1': ?, 'id': ?, 'text': ?}`;
+  const Parameters = [{ S: String(user) }, { S: context.awsRequestId }, { S: String(text) }];
+
+  try {
+    const r = await ddb.send(new ExecuteStatementCommand({ Statement, Parameters }));
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify(r)
+    };
+  } catch (e) {
+    return {
+      statusCode: 500,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ error: String(e?.message || e) })
+    };
+  }
+};

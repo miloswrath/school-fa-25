@@ -1,0 +1,82 @@
+import { DynamoDBClient, ExecuteStatementCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
+
+const ddb = new DynamoDBClient({});
+
+function httpRes(statusCode, body) {
+  return {
+    statusCode,
+    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+    body: JSON.stringify(body),
+  };
+}
+
+function extractParams(event) {
+  // Primary: REST API proxy integration
+  if (event?.pathParameters?.year && event?.pathParameters?.genres && event?.pathParameters?.rating) {
+    const { year, genres, rating } = event.pathParameters;
+    return { year, genres, rating };
+  }
+  // Fallback: parse raw path (works with HTTP API v2 or misconfig)
+  const rawPath = event?.rawPath || event?.path || "";
+  const parts = rawPath.split("/").filter(Boolean);
+  const idx = parts.findIndex(p => p === "movies");
+  if (idx !== -1 && parts.length >= idx + 4) {
+    const [year, genres, rating] = parts.slice(idx + 1, idx + 4);
+    return { year, genres, rating };
+  }
+  return {};
+}
+
+export const handler = async (event) => {
+  try {
+    const { year, genres, rating } = extractParams(event);
+    if (!year || !genres || !rating) {
+      return httpRes(400, { message: "Missing required path params: /movies/{year}/{genres}/{rating}" });
+    }
+
+    const table = process.env.TABLE_NAME;
+    if (!table) return httpRes(500, { message: "TABLE_NAME env var is not set" });
+
+    const yearNum = Number(year);
+    const minRating = Number(rating);
+    if (!Number.isFinite(yearNum)) return httpRes(400, { message: "year must be a number" });
+    if (!Number.isFinite(minRating)) return httpRes(400, { message: "rating must be a number (e.g., 8.3)" });
+
+    const genre = String(genres).trim();
+    if (!genre) return httpRes(400, { message: "genres must be non-empty" });
+
+    // Return ALL attributes for each matching item
+    const statement = `
+      SELECT *
+      FROM "${table}"
+      WHERE year = ? AND contains(info.genres, ?) AND info.rating >= ?
+      ORDER BY title
+    `;
+    const Parameters = [
+      { N: String(yearNum) },  // year
+      { S: genre },            // genres (single value in list)
+      { N: String(minRating) } // rating threshold
+    ];
+
+    // Collect all pages (no nextToken returned to client)
+    const all = [];
+    let next;
+    do {
+      const out = await ddb.send(new ExecuteStatementCommand({
+        Statement: statement,
+        Parameters,
+        ...(next ? { NextToken: next } : {})
+      }));
+      const items = (out.Items ?? []).map(unmarshall);
+      all.push(...items);
+      next = out.NextToken;
+    } while (next);
+
+    return httpRes(200, all);
+
+  } catch (err) {
+    console.error(err);
+    return httpRes(500, { message: "Internal error", error: String(err?.message || err) });
+  }
+};

@@ -1,0 +1,44 @@
+.App {
+  width: 100%;
+  max-width: 960px;
+}
+
+.authenticator {
+  width: 100%;
+}
+
+.sign-out-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  min-height: 60vh;
+}
+
+.sign-out-card {
+  width: min(100%, 520px);
+  background-color: var(--amplify-colors-background-secondary, #ffffff);
+  color: var(--amplify-colors-font-primary, #1a1f36);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(29, 78, 216, 0.1);
+  padding: 2.5rem 2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sign-out-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.sign-out-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(26, 31, 54, 0.75);
+}
+
+.sign-out-button {
+  margin-top: 1.5rem;
+}

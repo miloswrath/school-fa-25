@@ -1,0 +1,8 @@
+:root {
+  margin-top: 0px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-width:320px;
+  min-height:100vh;
+}
